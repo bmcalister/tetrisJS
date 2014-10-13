@@ -94,12 +94,13 @@
     canvas.width = game.grid.x * game.grid_width;
     canvas.height = game.grid.y * game.grid_width;
 
-    // center canvas
+    // center canvas and add styling
     canvas.style.position = 'absolute';
     canvas.style.top = '50%';
     canvas.style.left = '50%';
     canvas.style.marginTop = -canvas.height/2 + 'px';
     canvas.style.marginLeft = -canvas.width/2 + 'px';
+    canvas.style.border = '1px solid black';
 
     // prepare game matrix
     for( var i = 0; i < game.grid.y; i++ ) {
@@ -132,7 +133,6 @@
         var newLayout = layout || this.type.layout,
             newX = this.x + x,
             newY = this.y + y;
-
 
         // check if new position conflicts with object in matrix
         // or is out of bounds
