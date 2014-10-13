@@ -131,8 +131,7 @@
 
         var newLayout = layout || this.type.layout,
             newX = this.x + x,
-            newY = this.y + y,
-            tmpMatrix = gameMatrix;
+            newY = this.y + y;
 
 
         // check if new position conflicts with object in matrix
@@ -151,9 +150,9 @@
                         return true;
                     }
 
-                    if( typeof tmpMatrix[ i + newY ] !== 'undefined' &&
-                        typeof tmpMatrix[ i + newY ][ j + newX ] !== 'undefined' && 
-                        tmpMatrix[ i + newY ][ j + newX ] !== 0 ) { // object colliding with gameMatrix
+                    if( typeof gameMatrix[ i + newY ] !== 'undefined' &&
+                        typeof gameMatrix[ i + newY ][ j + newX ] !== 'undefined' && 
+                        gameMatrix[ i + newY ][ j + newX ] !== 0 ) { // object colliding with gameMatrix
 
                         // check if game is over and set state only if not rotating
                         if(this.y - i < 0 && layout === undefined){
