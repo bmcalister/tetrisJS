@@ -120,7 +120,7 @@
     };
 
     /**
-     * Checks wether Block conflicts with objects in gameMatrix or is out of bounds
+     * Checks whether Block conflicts with objects in gameMatrix or is out of bounds
      * returns true on conflict
      *
      * @param <Number> x
