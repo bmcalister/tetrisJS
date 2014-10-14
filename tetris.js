@@ -113,7 +113,7 @@
      *
      * @param <Number> type
      */
-    var Block = function(type) {
+    function Block(type) {
         this.type = blockTypes[type] || blockTypes[0];
         this.x =  Math.floor(Math.random() * (game.grid.x - this.type.layout[0].length + 1) );
         this.y =  0 - this.type.layout.length;
