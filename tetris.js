@@ -134,7 +134,7 @@
             newX = this.x + x,
             newY = this.y + y;
 
-        // check if new position conflicts with object in matrix
+        // Check if new position conflicts with object in matrix
         // or is out of bounds
         for( var i = 0; i < newLayout.length; i++ ){
 
@@ -201,7 +201,7 @@
     }
 
     /**
-     * rotate obstacle by 90 degrees
+     * Rotate Block by 90 degrees
      */
     Block.prototype.rotate = function() {
 
@@ -226,7 +226,7 @@
     };
 
     /**
-     * draws block to canvas
+     * Draws block to canvas
      *
      * @param <Object> ctx
      */
@@ -301,7 +301,7 @@
     }
 
     /**
-     * adjust speed on releasing down arrow
+     * Adjust speed on releasing down arrow
      *
      * @param <Object> event
      */
@@ -319,7 +319,7 @@
     global.addEventListener("keyup", keyUp, false);
 
     /**
-     * calculate everything for each frame then draw
+     * Calculate everything for each frame then draw
      */
     var update = function() {
 
