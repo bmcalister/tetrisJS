@@ -170,20 +170,24 @@
 
     /**
      * Updates Block position on x- and/or y-axis
+     * returns false if no update happened (hitTest didn't pass)
      *
      * @param <Number> x
      * @param <Number> y
+     * @return <Boolean>
      */
     Block.prototype.updatePosition = function(x, y) {
 
         // return if conflicting
         if (this.hitTest(x, y)) {
-            return;
+            return false;
         }
 
         // update x and y positions
         this.x = this.x + x;
         this.y = this.y + y;
+
+        return true;
     }
 
     /**
@@ -324,12 +328,12 @@
     var update = function() {
 
         // add initial block if none exists
-        if (activeBlock === undefined) {
+        if (activeBlock === null) {
             activeBlock = new Block( Math.floor(Math.random()*(blockTypes.length)) );
         }
 
-        // hit test with on y axis
-        if (activeBlock.hitTest(0, 1)) {
+        // check if block was moved
+        if ( !activeBlock.updatePosition(0, 1) ) {
 
             // check if game over
             if (game.state === 'over') {
@@ -341,11 +345,7 @@
             activeBlock.transfer();
 
             // remove Block reference
-            activeBlock = undefined;
-
-        } else {
-
-            activeBlock.updatePosition(0, 1);
+            activeBlock = null;
 
         }
 
