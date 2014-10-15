@@ -33,8 +33,8 @@
         game = {
             level: 1,
             grid_width: 25,
-            standardSpeed: 18,
-            speed: 18,
+            standardSpeed: 16,
+            speed: 16,
             state: 'playing',
             grid: {
                 x: 10,
@@ -187,7 +187,7 @@
         // immediately update change in x-axis, but wait with y-axis
         if( y !== 0 && y !== undefined &&
             frames % game.speed !== 0){
-            return;
+            return true;
         }
 
         // update x and y positions
@@ -306,7 +306,7 @@
                 break;
             
             case 40:
-                game.speed = 6;
+                game.speed = 4;
                 break;
         }
     }
@@ -336,17 +336,13 @@
 
         frames++;
 
-        if(frames > 100){
-            frames = 1;
-        }
-
         // add initial block if none exists
-        if (activeBlock === null) {
+        if (activeBlock === undefined) {
             activeBlock = new Block( Math.floor(Math.random()*(blockTypes.length)) );
         }
 
         // check if block was moved
-        if ( !activeBlock.updatePosition(0, 1) ) {
+        if (!activeBlock.updatePosition(0, 1) ) {
 
             // check if game over
             if (game.state === 'over') {
@@ -358,29 +354,29 @@
             activeBlock.transfer();
 
             // remove Block reference
-            activeBlock = null;
+            activeBlock = undefined;
 
-        }
+            // remove completed layers
+            for(var i = gameMatrix.length - 1; i >= 0; i--){
+                if( gameMatrix[i].filter(function(e){ return e !== undefined }).length === game.grid.x ) {
 
-        // remove completed layers
-        for(var i = gameMatrix.length - 1; i >= 0; i--){
-            if( gameMatrix[i].filter(function(e){ return e !== undefined }).length === game.grid.x ) {
+                    // remove finished layer
+                    gameMatrix.splice(i,1); 
 
-                // remove finished layer
-                gameMatrix.splice(i,1); 
-
-                // add fresh layer at top
-                gameMatrix.unshift( new Array( game.grid.x ) ); 
-                
-                // update i
-                i++; 
+                    // add fresh layer at top
+                    gameMatrix.unshift( new Array( game.grid.x ) ); 
+                    
+                    // update i
+                    i++; 
+                }
             }
+
         }
 
         // draw
         render();
 
-        global.requestAnimationFrame(update, canvas);
+        global.requestAnimationFrame(update);
 
     };
 
