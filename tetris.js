@@ -33,8 +33,8 @@
         game = {
             level: 1,
             grid_width: 25,
-            standardFps: 4,
-            fps: 4,
+            standardSpeed: 18,
+            speed: 18,
             state: 'playing',
             grid: {
                 x: 10,
@@ -84,6 +84,7 @@
                 [1, 1, 1, 1]
             ]
         }],
+        frames = 0,
         gameMatrix = [], // contains all static squares
         activeBlock; // holds a reference to the currently moving Block
 
@@ -134,7 +135,7 @@
             newX = this.x + x,
             newY = this.y + y;
 
-        // check if new position conflicts with object in matrix
+        // Check if new position conflicts with object in matrix
         // or is out of bounds
         for( var i = 0; i < newLayout.length; i++ ){
 
@@ -183,6 +184,12 @@
             return false;
         }
 
+        // immediately update change in x-axis, but wait with y-axis
+        if( y !== 0 && y !== undefined &&
+            frames % game.speed !== 0){
+            return;
+        }
+
         // update x and y positions
         this.x = this.x + x;
         this.y = this.y + y;
@@ -205,7 +212,7 @@
     }
 
     /**
-     * rotate obstacle by 90 degrees
+     * Rotate Block by 90 degrees
      */
     Block.prototype.rotate = function() {
 
@@ -230,7 +237,7 @@
     };
 
     /**
-     * draws block to canvas
+     * Draws block to canvas
      *
      * @param <Object> ctx
      */
@@ -299,13 +306,13 @@
                 break;
             
             case 40:
-                game.fps = 20;
+                game.speed = 6;
                 break;
         }
     }
 
     /**
-     * adjust speed on releasing down arrow
+     * Adjust speed on releasing down arrow
      *
      * @param <Object> event
      */
@@ -313,7 +320,7 @@
 
         switch (event.keyCode) {
             case 40:
-                game.fps = game.standardFps;
+                game.speed = game.standardSpeed;
                 break;
         }
     }
@@ -323,9 +330,15 @@
     global.addEventListener("keyup", keyUp, false);
 
     /**
-     * calculate everything for each frame then draw
+     * Calculate everything for each frame then draw
      */
     var update = function() {
+
+        frames++;
+
+        if(frames > 100){
+            frames = 1;
+        }
 
         // add initial block if none exists
         if (activeBlock === null) {
@@ -367,10 +380,7 @@
         // draw
         render();
 
-        // animate game
-        setTimeout(function() {
-            global.requestAnimationFrame(update, canvas);
-        }, 1000 / game.fps);
+        global.requestAnimationFrame(update, canvas);
 
     };
 
