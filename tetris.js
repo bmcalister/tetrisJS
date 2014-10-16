@@ -118,7 +118,7 @@
         this.type = blockTypes[type] || blockTypes[0];
         this.x =  Math.floor(Math.random() * (game.grid.x - this.type.layout[0].length + 1) );
         this.y =  0 - this.type.layout.length;
-    };
+    }
 
     /**
      * Checks whether Block conflicts with objects in gameMatrix or is out of bounds
@@ -370,7 +370,6 @@
                     i++; 
                 }
             }
-
         }
 
         // draw
