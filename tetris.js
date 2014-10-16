@@ -25,7 +25,7 @@
  * SOFTWARE.
  */
 
-;(function(global) {
+;(function(global, undefined) {
     'use strict';
 
     var canvas = document.createElement("canvas"),
@@ -341,7 +341,7 @@
             activeBlock = new Block( Math.floor(Math.random()*(blockTypes.length)) );
         }
 
-        // check if block was moved
+        // check if block could be moved down
         if (!activeBlock.updatePosition(0, 1) ) {
 
             // check if game over
@@ -408,7 +408,7 @@
 
     update();
 
-})(window, undefined);
+})(window);
 
 /**
  * requestAnimationFrame polyfill
